@@ -2,6 +2,7 @@
 #include "Bit.h"
 #include "BitHolder.h"
 #include "Turn.h"
+#include "Chess.h"
 #include "../Application.h"
 
 Game::Game()

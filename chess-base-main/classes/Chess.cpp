@@ -55,6 +55,78 @@ void Chess::FENtoBoard(const std::string& fen) {
     // convert a FEN string to a board
     // FEN is a space delimited string with 6 fields
     // 1: piece placement (from white's perspective)
+    //we want to loop through each char in fen and update on the board
+    // for now lets print first char fen[0]
+    // FEN FENtoBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+    
+    // black top first take first 17 chars
+    // 56 ------------ 63
+    // 48 ------------ 55
+    auto getType = [](char c) -> int{
+            switch (c)
+            {
+                case 'p' : case 'P':
+                return 1;
+                case 'n': case 'N':
+                return 2;
+                case 'b': case 'B':
+                return 3;
+                case 'r': case 'R':
+                return 4;
+                case 'q': case 'Q':
+                return 5;
+                case 'k': case 'K':
+                return 6;
+            }
+        }; // 1 pawn, 2 Knignt, 3 Bishop, 4 Rook, 5 Queen, 6 King
+
+    for (int i = 0; i < 8; i++) 
+    {
+        char c = fen[i];
+        int playerType = getType(c);
+        int playerColor = isupper(c) ? 0 : 1; // white = 0, black = 1
+        Bit* currBit = PieceForPlayer(playerColor, ChessPiece(playerType));
+        BitHolder* holder = _grid->getSquareByIndex(56 + i);
+        holder->setBit(currBit);
+        currBit->setPosition(holder->getPosition());
+    }
+
+    for (int i = 0; i < 8; i++) // second batch
+    {
+        char c = fen[i + 9]; // we start from i + 9 so we skip the '/'
+        int playerType = getType(c);
+        int playerColor = isupper(c) ? 0 : 1; // white = 0, black = 1
+        Bit* currBit = PieceForPlayer(playerColor, ChessPiece(playerType));
+        BitHolder* holder = _grid->getSquareByIndex(48 + i);
+        holder->setBit(currBit);
+        currBit->setPosition(holder->getPosition());
+    }
+
+    for (int i = 0; i < 8; i++) // third batch
+    {
+        char c = fen[i + 26]; // we start from i + 34 so we skip the '/ and all the 8s etc for now'
+        int playerType = getType(c);
+        int playerColor = isupper(c) ? 0 : 1; // white = 0, black = 1
+        Bit* currBit = PieceForPlayer(playerColor, ChessPiece(playerType));
+        BitHolder* holder = _grid->getSquareByIndex(8 + i);
+        holder->setBit(currBit);
+        currBit->setPosition(holder->getPosition());
+    }
+
+    for (int i = 0; i < 8; i++) // fourth batch
+    {
+        char c = fen[i + 35]; // we start from i + 43 so we skip the '/ and all the 8s and PPPs etc for now'
+        int playerType = getType(c);
+        int playerColor = isupper(c) ? 0 : 1; // white = 0, black = 1
+        Bit* currBit = PieceForPlayer(playerColor, ChessPiece(playerType));
+        BitHolder* holder = _grid->getSquareByIndex(i);
+        holder->setBit(currBit);
+        currBit->setPosition(holder->getPosition());
+    }
+
+
+
+
     // NOT PART OF THIS ASSIGNMENT BUT OTHER THINGS THAT CAN BE IN A FEN STRING
     // ARE BELOW
     // 2: active color (W or B)
