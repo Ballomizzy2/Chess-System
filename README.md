@@ -1,4 +1,4 @@
-###Move Updates
+#Move Updates
 - Initial Chess Board State
 <img width="1629" height="684" alt="image" src="https://github.com/user-attachments/assets/19b98b5f-7398-4289-ade4-6814226d3bc7" />
 
