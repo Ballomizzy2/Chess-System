@@ -117,7 +117,10 @@ public:
 	const int getScore() { return _gameOptions.score; };
 	void setScore(int score) { _gameOptions.score = score; };
 	// this code below limits class to two players at the most, but it ensures player 0 is white and player 1 is black
-	Player *getCurrentPlayer() { return _players.at(_gameOptions.currentTurnNo & 1); };
+	Player *getCurrentPlayer() { 
+		std::cout << "Current No " << _gameOptions.currentTurnNo << std::endl;
+		return _players.at(_gameOptions.currentTurnNo & 1); 
+	};
 	Player *getPlayerAt(unsigned int playerNumber) const { return _players.at(playerNumber); };
 	const int getAIPlayer() const { return _gameOptions.AIPlayer; };
 	const int getHumanPlayer() const

@@ -215,6 +215,7 @@ void Game::drawFrame()
 
 void Game::bitMovedFromTo(Bit &bit, BitHolder &src, BitHolder &dst)
 {
+	_gameOptions.currentTurnNo++;
 	endTurn();
 }
 

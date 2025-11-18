@@ -185,6 +185,7 @@ bool Chess::canBitMoveFrom(Bit &bit, BitHolder &src)
 {
     // need to implement friendly/unfriendly in bit so for now this hack
     int currentPlayer = getCurrentPlayer()->playerNumber() * 128;
+    std::cout << "Current Player" << currentPlayer << " + " << getCurrentTurnNo() << std::endl;
     int pieceColor = bit.gameTag() & 128;
     if (pieceColor == currentPlayer) {
         // Highlight valid moves when piece is selected
@@ -225,6 +226,8 @@ bool Chess::canBitMoveFromTo(Bit &bit, BitHolder &src, BitHolder &dst)
     
     return false;
 }
+
+
 
 void Chess::stopGame()
 {
@@ -638,17 +641,21 @@ void Chess::clearBoardHighlights()
 
 void Chess::bitMovedFromTo(Bit &bit, BitHolder &src, BitHolder &dst)
 {
-    // Verify the move was legal (double-check)
-    if (!canBitMoveFromTo(bit, src, dst)) {
-        // Move was invalid, this shouldn't happen but handle it
-        return;
-    }
+    // // Verify the move was legal (double-check)
+    // if (!canBitMoveFromTo(bit, src, dst)) {
+    //     // Move was invalid, this shouldn't happen but handle it
+    //     return;
+    // }
     
     // Clear highlights
     clearBoardHighlights();
     
     // Call parent to end turn
-    Game::bitMovedFromTo(bit, src, dst);
+    _gameOptions.currentTurnNo++;
+    std::cout << _gameOptions.currentTurnNo << std::endl;
+
+    //Game::endTurn();
+    //Game::bitMovedFromTo(bit, src, dst);
 }
 
 bool Chess::clickedBit(Bit &bit)
@@ -686,6 +693,7 @@ bool Chess::clickedBit(Bit &bit)
                 
                 bitMovedFromTo(*_selectedPiece, *_selectedPieceSource, *square);
                 
+                //change turns
                 _selectedPiece = nullptr;
                 _selectedPieceSource = nullptr;
                 return true;
